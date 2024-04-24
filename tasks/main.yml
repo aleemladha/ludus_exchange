@@ -1,0 +1,26 @@
+---
+- name: Check if exchange is installed
+  win_service:
+    name: "MSExchangeFrontendTransport"
+  register: exchange_installed
+
+- name: Fail the play if Exchange is already installed
+  ansible.builtin.fail:
+    msg: "Exchange is already installed have fun"
+  when: exchange_installed.exists
+
+- name: Download Exchange ISO
+  ansible.builtin.include_tasks:
+    file: ludus-download-exchange.yml
+
+- name: Ludus add domainadmin userrights for exchange to install in AD
+  ansible.builtin.include_tasks:
+    file: ludus-exchange-rights.yml
+
+- name: Ludus Exchange Server Features to be installed
+  ansible.builtin.include_tasks:
+    file: ludus-exchange-pre.yml
+
+- name: Install Exchange Server
+  ansible.builtin.include_tasks:
+    file: ludus-exchange-install.yml

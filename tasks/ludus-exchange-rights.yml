@@ -1,0 +1,20 @@
+- name: Ensure domainadmin is part of Enterprise Admins
+  win_domain_group_membership:
+    name: "Enterprise Admins"
+    members:
+      - domainadmin
+    state: present
+
+- name: Ensure domainadmin is part of Domain Admins
+  win_domain_group_membership:
+    name: "Domain Admins"
+    members:
+      - domainadmin
+    state: present
+
+- name: Ensure domainadmin has the right membership for exchange server
+  win_domain_group_membership:
+    name: "Schema Admins"
+    members:
+      - domainadmin
+    state: present
