@@ -2,7 +2,7 @@
 dependencies: []
 
 galaxy_info:
-  role_name: aleemladha_exchange_2019
+  role_name: ludus_exchange2019
   author: aleemladha
   description: Install Exchange 2019 to a Windows server
   company: aleemladha
