@@ -4,9 +4,8 @@
     name: "MSExchangeFrontendTransport"
   register: exchange_installed
 
-- name: Fail the play if Exchange is already installed
-  ansible.builtin.fail:
-    msg: "Exchange is already installed have fun"
+- name: End the play if Exchange is already installed
+  ansible.builtin.meta: end_host
   when: exchange_installed.exists
 
 - name: Download Exchange ISO
