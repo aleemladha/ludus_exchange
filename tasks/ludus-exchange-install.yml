@@ -23,7 +23,7 @@
     ansible_become_user: "{{ ludus_exchange_domain_username }}"
     ansible_become_password: "{{ ludus_exchange_domain_password }}"
 
-- name: Install Exchange 2016
+- name: Install Exchange
   ansible.windows.win_shell: |
     & {{ iso_mount.mount_paths[0] }}Setup.exe /IAcceptExchangeServerLicenseTerms /Mode:Install /Role:Mailbox
   vars:
