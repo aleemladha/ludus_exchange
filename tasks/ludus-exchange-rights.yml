@@ -1,6 +1,6 @@
 - name: Ensure domainadmin is part of Enterprise Admins
   ansible.windows.win_shell: |
-    & net group "Enterprise Admins" domainadmin /add
+    & net group "Enterprise Admins" domainadmin /add /domain
   vars:
     ansible_become: true
     ansible_become_method: runas
@@ -9,7 +9,7 @@
 
 - name: Ensure domainadmin is part of Schema Admins
   ansible.windows.win_shell: |
-    & net group "Schema Admins" domainadmin /add
+    & net group "Schema Admins" domainadmin /add /domain
   vars:
     ansible_become: true
     ansible_become_method: runas
