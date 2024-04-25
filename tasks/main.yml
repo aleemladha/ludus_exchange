@@ -1,5 +1,4 @@
----
-- name: Check if exchange is installed
+- name: Check if Exchange is installed
   win_service:
     name: "MSExchangeFrontendTransport"
   register: exchange_installed
@@ -8,18 +7,33 @@
   ansible.builtin.meta: end_host
   when: exchange_installed.exists
 
-- name: Download Exchange ISO
-  ansible.builtin.include_tasks:
-    file: ludus-download-exchange.yml
+- name: Run PowerShell command to get Windows Server version
+  ansible.windows.win_shell: |
+    $osInfo = Get-WmiObject Win32_OperatingSystem
+    $osInfo.Caption
+  register: windows_server_caption
 
-- name: Ludus add domainadmin userrights for exchange to install in AD
-  ansible.builtin.include_tasks:
-    file: ludus-exchange-rights.yml
+- name: Set fact for Windows Server 2019
+  set_fact:
+    is_windows_server_2019: "{{ 'Windows Server 2019' in windows_server_caption.stdout }}"
+  when: windows_server_caption is defined
 
-- name: Ludus Exchange Server Features to be installed
-  ansible.builtin.include_tasks:
-    file: ludus-exchange-pre.yml
+- name: Set fact for Windows Server 2016
+  set_fact:
+    is_windows_server_2016: "{{ 'Windows Server 2016' in windows_server_caption.stdout }}"
+  when: windows_server_caption is defined
 
-- name: Install Exchange Server
-  ansible.builtin.include_tasks:
-    file: ludus-exchange-install.yml
+- name: Download Exchange ISO for Windows Server 2016
+  ansible.builtin.include_tasks: ludus-download-exchange-2016.yml
+  when: is_windows_server_2016
+
+- name: Download Exchange ISO for Windows Server 2019
+  ansible.builtin.include_tasks: ludus-download-exchange-2019.yml
+  when: is_windows_server_2019
+
+- name: Ludus Exchange Server features to be installed
+  ansible.builtin.include_tasks: ludus-exchange-pre.yml
+
+- name: Install Exchange Server 
+  ansible.builtin.include_tasks: ludus-exchange-install.yml
+  

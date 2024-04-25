@@ -6,6 +6,7 @@ rewrite_module_path: "https://download.microsoft.com/download/1/2/8/128E2E22-C1B
 ucma_runtime_path: "https://download.microsoft.com/download/2/C/4/2C47A5C1-A1F3-4843-B9FE-84C0032C61EC/UcmaRuntimeSetup.exe"
 ludus_exchange_iso_directory: "C:\\ludus"
 ludus_exchange_iso_url: "https://download.microsoft.com/download/d/7/b/d7bcf78a-00d2-4a46-a3d2-7d506116bcd2/ExchangeServer2019-x64-CU9.ISO"
+ludus_exchange2016_iso_url: "https://download.microsoft.com/download/2/5/8/258D30CF-CA4C-433A-A618-FB7E6BCC4EEE/ExchangeServer2016-x64-cu12.iso"
 # This pulls the netbios_name out of the domain assigned to this machine in the ludus range config
 ludus_exchange_domain: "{{ (ludus | selectattr('vm_name', 'match', inventory_hostname))[0].domain.fqdn.split('.')[0] }}"
 # This pulls the vm_name of the primary-dc for the domain assigned to this machine in the ludus range config
