@@ -2,9 +2,9 @@
 dependencies: []
 
 galaxy_info:
-  role_name: ludus_exchange2019
+  role_name: ludus_exchange
   author: aleemladha
-  description: Install Exchange 2019 to a Windows server
+  description: Install Exchange 2019 or Exchange 2016 to a Windows server
   company: aleemladha
   license: GPLv3
   min_ansible_version: "2.10"
