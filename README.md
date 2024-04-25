@@ -13,7 +13,7 @@ None.
 
 ```
 # Add the role to your ludus host
-ludus ansible roles add aleemladha.ludus_exchange2019
+ludus ansible roles add aleemladha.ludus_exchange
 
 ```
 
