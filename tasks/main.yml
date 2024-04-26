@@ -20,4 +20,9 @@
   ansible.builtin.include_tasks: ludus-exchange-pre.yml
 
 - name: Install Exchange Server
-  ansible.builtin.include_tasks: ludus-exchange-install.yml
+  ansible.builtin.include_tasks: ludus-exchange-2016-install.yml
+  when: ludus_os_version == "2016"
+
+- name: Install Exchange Server
+  ansible.builtin.include_tasks: ludus-exchange-2019-install.yml
+  when: ludus_os_version in ["2019", "2022"]
