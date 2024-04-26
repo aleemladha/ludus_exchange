@@ -1,4 +1,4 @@
-- name: Get Exchange ISO if needed
+- name: Get Exchange 2016 ISO if needed
   run_once: true
   block:
     - name: Create /opt/ludus/resources/iso directory if it doesn't exist
@@ -8,13 +8,13 @@
         recurse: true
       delegate_to: localhost
 
-    - name: Check if Exchange ISO exists
+    - name: Check if Exchange 2016 ISO exists
       ansible.builtin.stat:
         path: "{{ ludus_install_directory }}/resources/iso/{{ ludus_exchange2016_iso_url.split('/') | last }}"
       delegate_to: localhost
       register: exchange_iso_check
 
-    - name: Downloading EXCHANGE ISO - This will take a while
+    - name: Downloading EXCHANGE 2016 ISO - This will take a while
       ansible.builtin.get_url:
         url: "{{ ludus_exchange2016_iso_url }}"
         dest: "{{ ludus_install_directory }}/resources/iso/{{ ludus_exchange2016_iso_url.split('/') | last }}"
@@ -22,7 +22,7 @@
       delegate_to: localhost
       when: not exchange_iso_check.stat.exists
 
-- name: Check if EXCHANGE ISO exists on host
+- name: Check if EXCHANGE 2016 ISO exists on host
   ansible.windows.win_stat:
     path: "{{ ludus_exchange_iso_directory }}\\{{ ludus_exchange2016_iso_url.split('/') | last }}"
   register: exchange_iso_host_check
