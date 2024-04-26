@@ -15,3 +15,4 @@ ludus_exchange_dc: "{{ (ludus | selectattr('domain', 'defined') | selectattr('do
 ludus_exchange_host: "{{ (ludus | selectattr('vm_name', 'match', inventory_hostname))[0].hostname }}"
 ludus_exchange_domain_username: "{{ ludus_exchange_domain }}\\Administrator"
 ludus_exchange_domain_password: "{{ defaults.ad_domain_admin_password }}"
+ludus_os_version: "{{ proxmox_os_version_id }}"
