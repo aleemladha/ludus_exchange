@@ -13,7 +13,7 @@ ludus_exchange_domain: "{{ (ludus | selectattr('vm_name', 'match', inventory_hos
 ludus_exchange_dc: "{{ (ludus | selectattr('domain', 'defined') | selectattr('domain.fqdn', 'match', ludus_exchange_domain) | selectattr('domain.role', 'match', 'primary-dc'))[0].hostname }}"
 # This pulls the hostname from the ludus config for this host
 ludus_exchange_host: "{{ (ludus | selectattr('vm_name', 'match', inventory_hostname))[0].hostname }}"
-ludus_exchange_domain_username: "{{ ludus_exchange_domain }}\\Administrator"
+ludus_exchange_domain_username: "{{ ludus_exchange_domain }}\\{{ defaults.ad_domain_admin }}"
 ludus_exchange_domain_password: "{{ defaults.ad_domain_admin_password }}"
 ludus_os_version: "{{ proxmox_os_version_id }}"
 exchange_prereqs_complete_file: "C:\\ludus\\exchange_prereqs_complete.txt"
