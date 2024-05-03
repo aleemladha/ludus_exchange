@@ -1,33 +1,31 @@
+---
 - name: Check if Exchange is installed
   win_service:
     name: "MSExchangeFrontendTransport"
   register: exchange_installed
 
-- name: Run tasks if Exchange is not already installed
-  block:
-    - name: Download Exchange ISO for Windows Server 2016
-      ansible.builtin.include_tasks: ludus-download-exchange-2016.yml
-      when: ludus_os_version == "2016"
+- name: End the play if Exchange is already installed
+  ansible.builtin.meta: end_host
+  when: exchange_installed.exists
+  
+- name: Download Exchange ISO for Windows Server 2016
+  ansible.builtin.include_tasks: ludus-download-exchange-2016.yml
+  when: ludus_os_version == "2016"
 
-    - name: Download Exchange ISO for Windows Server 2019
-      ansible.builtin.include_tasks: ludus-download-exchange-2019.yml
-      when: ludus_os_version in ["2019", "2022"]
+- name: Download Exchange ISO for Windows Server 2019
+  ansible.builtin.include_tasks: ludus-download-exchange-2019.yml
+  when: ludus_os_version in ["2019", "2022"]
 
-    - name: Ludus Exchange Server features to be installed
-      ansible.builtin.include_tasks: ludus-exchange-pre.yml
+- name: Ludus Exchange Server features to be installed
+  ansible.builtin.include_tasks: ludus-exchange-pre.yml
 
-    - name: Install Exchange Server
-      ansible.builtin.include_tasks: ludus-exchange-2016-install.yml
-      when: ludus_os_version == "2016"
+- name: Install Exchange Server
+  ansible.builtin.include_tasks: ludus-exchange-2016-install.yml
+  when: ludus_os_version == "2016"
 
-    - name: Install Exchange Server
-      ansible.builtin.include_tasks: ludus-exchange-2019-install.yml
-      when: ludus_os_version in ["2019", "2022"]
-
-  rescue:
-    - name: Alert if Exchange is already installed
-      ansible.builtin.debug:
-        msg: "Exchange Server is already installed."
+- name: Install Exchange Server
+  ansible.builtin.include_tasks: ludus-exchange-2019-install.yml
+  when: ludus_os_version in ["2019", "2022"]
 
 - name: Run the send connector task
   ansible.builtin.include_tasks: ludus_sendconnector.yml
