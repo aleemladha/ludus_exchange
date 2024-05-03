@@ -30,3 +30,4 @@
 
 - name: Run the send connector task
   ansible.builtin.include_tasks: ludus_sendconnector.yml
+  when: exchange_installed.exists and send_connector_name is defined
