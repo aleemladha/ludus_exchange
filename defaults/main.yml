@@ -17,3 +17,9 @@ ludus_exchange_domain_username: "{{ ludus_exchange_domain }}\\{{ defaults.ad_dom
 ludus_exchange_domain_password: "{{ defaults.ad_domain_admin_password }}"
 ludus_os_version: "{{ proxmox_os_version_id }}"
 exchange_prereqs_complete_file: "C:\\ludus\\exchange_prereqs_complete.txt"
+#SendConnector Details
+send_connector_name: ""  # Default of the send connector
+send_connector_smtpserver: ""  # Smart hosts for the send connector
+send_connector_address_spaces:
+  - "SMTP:*;1"                        # Address spaces for the send connector
+send_connector_source_transport_servers: "{{ (ludus | selectattr('vm_name', 'match', inventory_hostname))[0].hostname }}"  # Source transport servers for the send connector
