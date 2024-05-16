@@ -53,18 +53,7 @@ ludus:
       fqdn: ludus.domain
       role: primary-dc
     roles:
-      - aleemladha.ludus_exchange2019
-  - vm_name: "{{ range_id }}-kali"
-    hostname: "{{ range_id }}-kali"
-    template: kali-x64-desktop-template
-    vlan: 20
-    ip_last_octet: 10
-    ram_gb: 4
-    cpus: 2
-    linux: true
-    testing:
-      snapshot: false
-      block_internet: false
+      - aleemladha.ludus_exchange
 ```
 
 ## Ludus setup
